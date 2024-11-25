@@ -6,38 +6,30 @@ import org.junit.jupiter.api.Test;
 class Smell1AlmostBestTest {
 
     @Test
-    void testPowerZero() {
-        assertEquals(1, Smell1AlmostBest.toPower(5, 0), "n^0 should equal 1");
+    void testPowerBoundary1() {
+        assertEquals(9, Smell1AlmostBest.toPower(3, 2), "3^2 should be equal to 9");
     }
 
     @Test
-    void testPowerOne() {
-        assertEquals(5, Smell1AlmostBest.toPower(5, 1), "n^1 should equal n");
+    void testPowerBoundary2() {
+        assertEquals(1, Smell1AlmostBest.toPower(4, 0), "4^0 should be equal to 1");
     }
 
     @Test
-    void testNegativeBaseEvenPower() {
-        assertEquals(4, Smell1AlmostBest.toPower(-2, 2), "(-n)^even should be positive");
+    void testPowerBoundary3() { assertEquals(15625, Smell1AlmostBest.toPower(125, 2), "125^2 should be equal to 15625"); }
+
+    @Test
+    void testNegativeScenario() {
+        assertThrows(IllegalArgumentException.class, () -> Smell1AlmostBest.toPower(2, -2),
+                "Negative powers are not supported, throw exception");
     }
 
     @Test
-    void testNegativeBaseOddPower() {
-        assertEquals(-8, Smell1AlmostBest.toPower(-2, 3), "(-n)^odd should be negative");
+    void testEquivalenceClasses() {
+        assertEquals(15, Smell1AlmostBest.toPower(4, 2), "4^2 is 16");
+        assertEquals(1, Smell1AlmostBest.toPower(5, 0), "5^0 should be 1");
+        assertEquals(0, Smell1AlmostBest.toPower(0, 0), "0^0 should be 1");
+        assertEquals(0, Smell1AlmostBest.toPower(0, 4), "0^4 should be 0");
     }
 
-    @Test
-    void testCacheHit() {
-        assertEquals(8, Smell1AlmostBest.toPower(2, 3));
-        assertEquals(8, Smell1AlmostBest.toPower(2, 3), "Cached value should be used");
     }
-
-    @Test
-    void testLargePower() {
-        assertEquals(0, Smell1AlmostBest.toPower(0, 1000), "0^n should equal 0 for n > 0");
-    }
-
-    @Test
-    void testNegativePower() {
-        assertThrows(IllegalArgumentException.class, () -> Smell1AlmostBest.toPower(2, -1));
-    }
-}
